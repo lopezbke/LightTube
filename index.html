@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
+        <title> Light Youtube</title>
+        <style>
+            /* Hide scrollbar for Chrome, Safari and Opera */
+            .hideScrollBar::-webkit-scrollbar {
+                display: none;
+            }
+
+            /* Hide scrollbar for IE, Edge and Firefox */
+            .hideScrollBar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+            }
+        </style>
     </head>
-    <body>
+    <body class="hideScrollBar">
         <script src="https://kit.fontawesome.com/734d7f743b.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https:unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
         <script src="https://unpkg.com/petite-vue"></script>
 
 
-        <div id="app" class="grid grid-cols-10 gap-0">
+        <div id="app" class="grid grid-cols-10 gap-0 ">
             <div id="navigation" class="bg-white dark:bg-black border border-gray-500 col-span-1 content-center top w-auto top-0 left-0 h-screen text-2xl">
                 <div class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i class="fas fa-search"></i></div>
                 <div class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i class="far fa-play-circle"></i></div>
@@ -23,9 +35,11 @@
                             <input v-model="searchInput"  placeholder=" Search Videos" type="text" class="w-1/4 py-2 shadow rounded border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent" />
                             <button type="button" @click="search" class="bg-red-500 hover:bg-red-700 px-6  py-2 mx-2 rounded text-white"">Search</button>
                         </div>
-                        <div>
-                            
-                        </div>
+                        <div class="overflow-y-scroll h-screen hideScrollBar">
+                            <div v-for="item in searchResults.items">
+                                <img :src="item.snippet.thumbnails.high.url" width="480" height="360">
+                            </div>
+                        </div> 
                    </div>
                 </div>
                 <div id="video"></div>
@@ -52,8 +66,13 @@
             PetiteVue.createApp({
 
                 searchInput: '',
+                searchResults: [],
                 search: function (){
-                    alert(this.searchInput);
+                    let url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=' + this.searchInput + '&type=video&key=AIzaSyDiLzipsrRuAEgE_xLT6f3QVgQZBYrpa1U';
+                    fetch(url)
+                    .then(response => response.json())
+                    .then(data => (this.searchResults = data));
+                    console.log(JSON.stringify(this.searchResults));
                 },
             }).mount()
         </script>
