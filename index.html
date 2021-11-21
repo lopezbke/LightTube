@@ -7,6 +7,32 @@
         <script src="https://kit.fontawesome.com/734d7f743b.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https:unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
         <script src="https://unpkg.com/petite-vue"></script>
+
+
+        <div id="app" class="grid grid-cols-10 gap-0">
+            <div id="navigation" class="bg-white dark:bg-black border border-gray-500 col-span-1 content-center top w-auto top-0 left-0 h-screen text-2xl">
+                <div class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i class="fas fa-search"></i></div>
+                <div class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i class="far fa-play-circle"></i></div>
+                <div class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i class="fa fa-history" aria-hidden="true"></i></div>
+                <div class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i class="fa fa-cog" aria-hidden="true"></i></div>
+            </div>
+            <div id="content" class="bg-gray-200 col-span-9">
+                <div id="searchComponent">
+                   <div class=" w-full my-10">
+                        <div class="flex justify-center">
+                            <input v-model="searchInput"  placeholder=" Search Videos" type="text" class="w-1/4 py-2 shadow rounded border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent" />
+                            <button type="button" @click="search" class="bg-red-500 hover:bg-red-700 px-6  py-2 mx-2 rounded text-white"">Search</button>
+                        </div>
+                        <div>
+                            
+                        </div>
+                   </div>
+                </div>
+                <div id="video"></div>
+                <div id="history"></div>
+                <div id="settings"></div>
+            </div>
+        </div>
         <script>
             if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark')
@@ -23,33 +49,13 @@
             // Whenever the user explicitly chooses to respect the OS preference
             localStorage.removeItem('theme')
             
-            PetiteVue.createApp().mount()
+            PetiteVue.createApp({
+
+                searchInput: '',
+                search: function (){
+                    alert(this.searchInput);
+                },
+            }).mount()
         </script>
-
-        <div id="app" class="grid grid-cols-10 gap-0">
-            <div id="navigation" class="bg-white dark:bg-black border border-gray-500 col-span-1 content-center top w-auto top-0 left-0 h-screen text-2xl">
-                <div class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i class="fas fa-search"></i></div>
-                <div class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i class="far fa-play-circle"></i></div>
-                <div class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i class="fa fa-history" aria-hidden="true"></i></div>
-                <div class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i class="fa fa-cog" aria-hidden="true"></i></div>
-            </div>
-            <div id="content" class="bg-gray-200 col-span-9">
-                <div id="searchComponent">
-                   <div class=" w-full my-10">
-                        <div class="flex justify-center">
-                            <input placeholder=" Search Videos" type="text" class="w-1/4 py-2 shadow rounded border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent" />
-                            <button type="button" class="bg-red-500 hover:bg-red-700 px-6  py-2 mx-2 rounded text-white"">Search</button>
-                        </div>
-                        <div>
-                            
-                        </div>
-                   </div>
-                </div>
-                <div id="video"></div>
-                <div id="history"></div>
-                <div id="settings"></div>
-            </div>
-        </div>
-
     </body>
 </html>
