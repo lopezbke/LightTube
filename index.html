@@ -42,7 +42,7 @@
                                     <div class="col-span-2">
                                         <div class="font-bold">{{item.snippet.title}}</div>
                                         <!-- Below is an ISO date-->
-                                        <div>{{item.snippet.channelTitle}} | {{Date(item.snippet.publishedAt)}}</div>
+                                        <div><span class="text-red-700">{{item.snippet.channelTitle}}</span> | {{Date(item.snippet.publishedAt).substring(0, 15)}}</div>
                                     </div>
                                 </div>
                                 
