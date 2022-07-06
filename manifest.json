@@ -1,0 +1,23 @@
+
+{
+    "name":"LightTube",
+    "short_name":"LightTube",
+    "start_url":"index.html",
+    "display":"standalone",
+    "background_color":"#5900b3",
+    "theme_color":"black",
+    "scope": ".",
+    "description":"This is a PWA tutorial.",
+    "icons":[
+    {
+    "src":"images/playSmall.png",                  
+    "sizes":"192x192",
+    "type":"image/png"
+    },
+    {
+    "src":"images/play.png",
+    "sizes":"512x512",
+    "type":"image/png"
+    }
+  ]
+}

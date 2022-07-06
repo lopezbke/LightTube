@@ -1,92 +1,149 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title> Light Youtube</title>
-        <style>
-            /* Hide scrollbar for Chrome, Safari and Opera */
-            .hideScrollBar::-webkit-scrollbar {
-                display: none;
+
+<head>
+      <!-- Responsive -->
+  <meta charset="utf-8">
+  <meta name="viewport"
+        content="width=device-width,
+                 initial-scale=1">
+  <meta http-equiv="X-UA-Compatible"
+        content="ie=edge">
+ 
+  <!-- Meta Tags required for
+       Progressive Web App -->
+  <meta name=
+  "apple-mobile-web-app-status-bar"
+        content="#aa7700">
+  <meta name="theme-color"
+        content="black">
+ 
+  <!-- Manifest File link -->
+  <link rel="manifest"
+        href="manifest.json">
+    <title> Light Youtube</title>
+    <style>
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .hideScrollBar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .hideScrollBar {
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+    </style>
+
+    <script>
+        window.addEventListener('load', () => {
+            registerSW();
+        });
+
+        // Register the Service Worker
+        async function registerSW() {
+            if ('serviceWorker' in navigator) {
+                try {
+                    await navigator
+                        .serviceWorker
+                        .register('serviceworker.js');
+                }
+                catch (e) {
+                    console.log('SW registration failed');
+                }
             }
+        }
+    </script>
+</head>
 
-            /* Hide scrollbar for IE, Edge and Firefox */
-            .hideScrollBar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-            }
-        </style>
-    </head>
-    <body class="hideScrollBar overflow-hidden">
-        <script src="https://kit.fontawesome.com/734d7f743b.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https:unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
-        <script src="https://unpkg.com/petite-vue"></script>
+<body class="hideScrollBar overflow-hidden">
+    <script src="https://kit.fontawesome.com/734d7f743b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https:unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
+    <script src="https://unpkg.com/petite-vue"></script>
 
 
-        <div id="app" class="grid grid-cols-10 gap-0 ">
-            <div id="navigation" class="bg-white dark:bg-black border border-gray-500 col-span-1 content-center top w-auto top-0 left-0 h-screen text-2xl">
-                <div @click="inVideo = false;" class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i class="fas fa-search"></i></div>
-                <div @click="inVideo = true;" class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i class="far fa-play-circle"></i></div>
-                <div class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i class="fa fa-history" aria-hidden="true"></i></div>
-                <div class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i class="fa fa-cog" aria-hidden="true"></i></div>
-            </div>
-            <div id="content" class="col-span-9">
-                <div id="searchComponent" v-show="!inVideo">
-                   <div class=" w-full my-10">
-                        <div class="flex justify-center mb-14">
-                            <input  v-on:keyup.enter="search" v-model="searchInput"  placeholder=" Search Videos" type="text" class="w-1/4 py-2 shadow rounded border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent" />
-                            <button type="button" @click="search" class="bg-red-500 hover:bg-red-700 px-6  py-2 mx-2 rounded text-white"">Search</button>
+    <div id="app" class="grid grid-cols-10 gap-0 ">
+        <div id="navigation"
+            class="bg-white dark:bg-black border border-gray-500 col-span-1 content-center top w-auto top-0 left-0 h-screen text-2xl">
+            <div @click="inVideo = false;"
+                class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i
+                    class="fas fa-search"></i></div>
+            <div @click="inVideo = true;"
+                class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i
+                    class="far fa-play-circle"></i></div>
+            <div class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i
+                    class="fa fa-history" aria-hidden="true"></i></div>
+            <div class="relative flex items-center justify-center h-1/4 w-auto hover:bg-gray-200"><i class="fa fa-cog"
+                    aria-hidden="true"></i></div>
+        </div>
+        <div id="content" class="col-span-9">
+            <div id="searchComponent" v-show="!inVideo">
+                <div class=" w-full my-10">
+                    <div class="flex justify-center mb-14">
+                        <input v-on:keyup.enter="search" v-model="searchInput" placeholder=" Search Videos" type="text"
+                            class="w-1/4 py-2 shadow rounded border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent" />
+                        <button type="button" @click="search"
+                            class="bg-red-500 hover:bg-red-700 px-6  py-2 mx-2 rounded text-white"">Search</button>
                         </div>
-                        <div class="overflow-y-scroll h-screen hideScrollBar">
+                        <div class=" overflow-y-scroll h-screen hideScrollBar">
                             <div v-for="item in searchResults.items">
-                                <div class="grid grid-cols-3 shadow px-4 py-4 hover:bg-red-100" @click="inVideo = true; currentVideo = 'https://www.youtube.com/embed/' + item.id.videoId">
-                                    <div class="col-span-1"><img :src="item.snippet.thumbnails.high.url" class="w-60 h-48" ></div>
+                                <div class="grid grid-cols-3 shadow px-4 py-4 hover:bg-red-100"
+                                    @click="inVideo = true; currentVideo = 'https://www.youtube.com/embed/' + item.id.videoId">
+                                    <div class="col-span-1"><img :src="item.snippet.thumbnails.high.url"
+                                            class="w-60 h-48"></div>
                                     <div class="col-span-2">
                                         <div class="font-bold">{{item.snippet.title}}</div>
                                         <!-- Below is an ISO date-->
-                                        <div><span @click="" class="text-red-700 underline cursor-pointer">{{item.snippet.channelTitle}}</span> | {{Date(item.snippet.publishedAt).substring(0, 15)}}</div>
+                                        <div><span @click=""
+                                                class="text-red-700 underline cursor-pointer">{{item.snippet.channelTitle}}</span>
+                                            | {{Date(item.snippet.publishedAt).substring(0, 15)}}</div>
                                     </div>
                                 </div>
-                                
+
                             </div>
-                        </div> 
-                   </div>
+                    </div>
                 </div>
-                <div id="video" v-if="inVideo" class="w-full h-full">
-                    <iframe :src="currentVideo + '?autoplay=1'" class="w-full h-full">
-                    </iframe>
-                </div>
-                <div id="history"></div>
-                <div id="settings"></div>
             </div>
+            <div id="video" v-if="inVideo" class="w-full h-full">
+                <iframe :src="currentVideo + '?autoplay=1'" class="w-full h-full">
+                </iframe>
+            </div>
+            <div id="history"></div>
+            <div id="settings"></div>
         </div>
-        <script>
-            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    </div>
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark')
-            } else {
+        } else {
             document.documentElement.classList.remove('dark')
-            }
+        }
 
-            // Whenever the user explicitly chooses light mode
-            localStorage.theme = 'light'
+        // Whenever the user explicitly chooses light mode
+        localStorage.theme = 'light'
 
-            // Whenever the user explicitly chooses dark mode
-            localStorage.theme = 'dark'
+        // Whenever the user explicitly chooses dark mode
+        localStorage.theme = 'dark'
 
-            // Whenever the user explicitly chooses to respect the OS preference
-            localStorage.removeItem('theme')
-            
-            PetiteVue.createApp({
-                searchInput: '',
-                inVideo: false,
-                currentVideo: "",
-                searchResults: [],
-                search: function (){
-                    let url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=' + this.searchInput + '&type=video&key=AIzaSyDiLzipsrRuAEgE_xLT6f3QVgQZBYrpa1U';
-                    fetch(url)
+        // Whenever the user explicitly chooses to respect the OS preference
+        localStorage.removeItem('theme')
+
+        PetiteVue.createApp({
+            searchInput: '',
+            inVideo: false,
+            currentVideo: "",
+            searchResults: [],
+            search: function () {
+                let url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=' + this.searchInput + '&type=video&key=AIzaSyDiLzipsrRuAEgE_xLT6f3QVgQZBYrpa1U';
+                fetch(url)
                     .then(response => response.json())
                     .then(data => (this.searchResults = data));
-                    console.log(JSON.stringify(this.searchResults));
-                },
-            }).mount()
-        </script>
-    </body>
+                console.log(JSON.stringify(this.searchResults));
+            },
+        }).mount()
+    </script>
+</body>
+
 </html>
