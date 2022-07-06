@@ -11,12 +11,12 @@
     "description":"This is a PWA tutorial.",
     "icons":[
     {
-    "src":"images/playSmall.png",                  
+    "src":"./images/playSmall.png",                  
     "sizes":"192x192",
     "type":"image/png"
     },
     {
-    "src":"images/play.png",
+    "src":",/images/play.png",
     "sizes":"512x512",
     "type":"image/png"
     }
