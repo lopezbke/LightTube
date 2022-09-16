@@ -85,7 +85,7 @@ PetiteVue.createApp({
             this.inVideo = false;
             this.inSettings = false;
             this.inHistory = false;
-            this.inRequestKey = true;
+            this.inRequestKey = false;
         }  
     },
     SaveSettings: function () {
