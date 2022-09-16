@@ -11,6 +11,9 @@
     <!-- Petite Vue Dependency -->
     <script src="https://unpkg.com/petite-vue"></script>
 
+    <!-- Axios Dependency -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
     <!-- Responsive -->
     <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
     <meta charset="utf-8">
@@ -114,7 +117,8 @@
             </div>
             <div id="settings" v-show="inSettings" class="h-screen">
                 <h1 class="text-4xl text-center" id="settingsHeader">Settings</h1>
-                <div class="flex justify-center items-center ">
+                <br>
+                <div class="flex justify-center items-center">
                     <div class="shadow p-10">
                         <input type="checkbox" name="darkMode" id="darkModeChk"><label for="darkModeChk"
                             id="labelDarkModeChk"> Dark Mode</label>
@@ -125,6 +129,14 @@
                             Settings</button>
                     </div>
                 </div>
+                <br>
+                <div class="flex justify-center items-center" v-show="key">
+                    <div>
+                        <label>Current API Key in Local Browser Local Storage: <b>{{key}}</b></label>
+                        <button type="button" @click="DeleteApiKey"
+                            class="py-1 mx-2 rounded text-red-500 underline">Delete Key</button>
+                    </div>
+                </div>
             </div>
             <div id="keyRequest" v-show="inRequestKey" class="h-screen">
                 <h1 class="text-4xl text-center" id="settingsHeader">API Key needed to test application.</h1>
@@ -132,10 +144,13 @@
                 <div class="flex justify-center items-center ">
                     <div class="shadow p-10">
                         <label for="apiKeyInput"> API Key:</label>
-                        <input type="text" id="apiKeyInput" placeholder=" Enter API Key..." class="w-3/4 py-2 shadow rounded border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent" >
+                        <input type="text" id="apiKeyInput" placeholder=" Enter API Key..."
+                            class="w-3/4 py-2 shadow rounded border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent">
                         <br>
                         <br>
-                        <button type="button"  @click="SaveKeyInLocal" class="bg-red-500 hover:bg-red-700 px-6  py-2 mx-2 rounded text-white">Save API Key on Browser Local Storage</button>
+                        <button type="button" @click="SaveKeyInLocal"
+                            class="bg-red-500 hover:bg-red-700 px-6  py-2 mx-2 rounded text-white">Save API Key on
+                            Browser Local Storage</button>
                     </div>
                 </div>
             </div>
