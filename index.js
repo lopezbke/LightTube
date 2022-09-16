@@ -3,38 +3,63 @@ PetiteVue.createApp({
     inVideo: false,
     inSettings: false,
     inHistory: false,
+    inRequestKey: false,
     videoHistory: [],
+    key: undefined,
     currentVideo: "",
     searchResults: [],
     search: function () {
-        let url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=' + this.searchInput + '&type=video&key=AIzaSyDiLzipsrRuAEgE_xLT6f3QVgQZBYrpa1U';
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {this.searchResults = data; console.log(this.searchResults)});
-        
+        if(this.isKeyAvailable()) {
+            let url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=' + this.searchInput + '&type=video&key=' + this.key;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {this.searchResults = data; console.log(this.searchResults)});
+        } 
     },
     goToSettings: function () {
-        console.log("goToSettings");
-        this.inVideo = false;
-        this.inSettings = true;
-        this.inHistory = false;
+        if(this.isKeyAvailable()) {
+            this.inVideo = false;
+            this.inSettings = true;
+            this.inHistory = false;
+            this.inRequestKey = false;
+        }
     },
     goToHistory: function () {
+        if(this.isKeyAvailable()) {
+            this.inVideo = false;
+            this.inSettings = false;
+            this.inHistory = true;
+            this.inRequestKey = false;
+        }
+    },
+    isKeyAvailable: function() {
+        const key = localStorage.getItem("lightTubeKey");
+        if(key) 
+        {
+            this.key = key;
+            return true;
+        } else {
+            this.goToRequestKey();
+            return false;
+        }
+    },
+    goToRequestKey: function () {
         this.inVideo = false;
         this.inSettings = false;
-        this.inHistory = true;
-        console.log(this.searchResults);
-        console.log(this.videoHistory);
+        this.inHistory = false;
+        this.inRequestKey = true;
     },
     onMounted: function (element) {
-        this.SetTheme();
-        const history = localStorage.getItem("LightTubeVideoHistory");
-        var historyArray = [];
-        if(history) 
-        {
-            historyArray = JSON.parse(history);
-            this.videoHistory = historyArray;
-        } 
+        if(this.isKeyAvailable()) {
+            this.SetTheme();
+            const history = localStorage.getItem("LightTubeVideoHistory");
+            var historyArray = [];
+            if(history) 
+            {
+                historyArray = JSON.parse(history);
+                this.videoHistory = historyArray;
+            } 
+        }
     },
     AddVideoToHistory: function (item) {
         
@@ -51,6 +76,12 @@ PetiteVue.createApp({
         }
         localStorage.setItem("LightTubeVideoHistory",JSON.stringify(historyArray));
         this.videoHistory = historyArray;
+    },
+    SaveKeyInLocal: function () {
+        if(document.getElementById("apiKeyInput").textContent.length > 5) 
+        {
+            localStorage.setItem("lightTubeKey",this.key);
+        }  
     },
     SaveSettings: function () {
         const darkModeCheckbox = document.getElementById("darkModeChk").checked;

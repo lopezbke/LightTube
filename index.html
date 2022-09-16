@@ -65,7 +65,7 @@
                     aria-hidden="true"></i></div>
         </div>
         <div id="content" class="col-span-9">
-            <div id="searchComponent" v-show="!inVideo && !inSettings && !inHistory">
+            <div id="searchComponent" v-show="!inVideo && !inSettings && !inHistory && !inRequestKey">
                 <div class=" w-full my-10">
                     <div class="flex justify-center mb-14">
                         <input v-on:keyup.enter="search" v-model="searchInput" placeholder=" Search Videos" type="text"
@@ -123,6 +123,19 @@
                         <button type="button" @click="SaveSettings"
                             class="bg-red-500 hover:bg-red-700 px-6  py-2 mx-2 rounded text-white">Save
                             Settings</button>
+                    </div>
+                </div>
+            </div>
+            <div id="keyRequest" v-show="inRequestKey" class="h-screen">
+                <h1 class="text-4xl text-center" id="settingsHeader">API Key needed to test application.</h1>
+                <br>
+                <div class="flex justify-center items-center ">
+                    <div class="shadow p-10">
+                        <label for="apiKeyInput"> API Key:</label>
+                        <input type="text" id="apiKeyInput" placeholder=" Enter API Key..." class="w-3/4 py-2 shadow rounded border border-transparent focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent" >
+                        <br>
+                        <br>
+                        <button type="button"  @click="SaveKeyInLocal" class="bg-red-500 hover:bg-red-700 px-6  py-2 mx-2 rounded text-white">Save API Key on Browser Local Storage</button>
                     </div>
                 </div>
             </div>
