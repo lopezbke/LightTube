@@ -81,6 +81,11 @@ PetiteVue.createApp({
         if(document.getElementById("apiKeyInput").value.length > 5) 
         {
             localStorage.setItem("lightTubeKey",this.key);
+            this.key = document.getElementById("apiKeyInput").value;
+            this.inVideo = false;
+            this.inSettings = false;
+            this.inHistory = false;
+            this.inRequestKey = true;
         }  
     },
     SaveSettings: function () {
