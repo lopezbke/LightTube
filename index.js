@@ -80,7 +80,7 @@ PetiteVue.createApp({
     SaveKeyInLocal: function () {
         if(document.getElementById("apiKeyInput").value.length > 5) 
         {
-            localStorage.setItem("lightTubeKey",this.key);
+            localStorage.setItem("lightTubeKey", document.getElementById("apiKeyInput").value);
             this.key = document.getElementById("apiKeyInput").value;
             this.inVideo = false;
             this.inSettings = false;
