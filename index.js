@@ -22,9 +22,9 @@ PetiteVue.createApp({
                     }
                   };
                   
-                  axios.request(options).then(function (response) {
+                  axios.request(options).then(response => {
                     this.searchResults = response.data;
-                  }).catch(function (error) {
+                  }).catch(error => {
                     console.error(error);
                     alert(error.response.data.error.message);
                   });
