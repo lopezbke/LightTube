@@ -96,7 +96,7 @@
                 </div>
             </div>
             <div id="video" v-if="inVideo" class="w-full h-full">
-                <iframe :src="currentVideo + '?autoplay=1'" class="w-full h-full">
+                <iframe :src="currentVideo + '?autoplay=1'" class="w-full h-full" style="display: none;">
                 </iframe>
             </div>
             <div id="history" v-show="inHistory">
